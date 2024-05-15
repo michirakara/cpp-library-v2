@@ -44,7 +44,11 @@ template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst {
         node_t *lch = nullptr, *rch = nullptr;
         size_t siz = 1;
         node_t() = default;
-        node_t(val_t val) : val(val), product(val) {}
+        node_t(val_t value) {
+            val = value;
+            if constexpr (monoid<S>)
+                product = value;
+        }
     };
     unsigned int xorshift128() {
         static unsigned int x = 123456789, y = 362436069, z = 521288629,
