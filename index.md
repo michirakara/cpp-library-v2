@@ -5,7 +5,7 @@ data:
     pages:
     - icon: ':heavy_check_mark:'
       path: algebra/concepts.hpp
-      title: "monoid\u304B\u3069\u3046\u304B\u3092\u5224\u5B9A\u3059\u308Bconcept"
+      title: concepts
   - name: binary-search-tree
     pages:
     - icon: ':heavy_check_mark:'

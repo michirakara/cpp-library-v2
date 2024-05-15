@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: algebra/concepts.hpp
-    title: "monoid\u304B\u3069\u3046\u304B\u3092\u5224\u5B9A\u3059\u308Bconcept"
+    title: concepts
   - icon: ':heavy_check_mark:'
     path: internal/dummy.hpp
     title: "\u30C0\u30DF\u30FC\u69CB\u9020\u4F53"
@@ -20,43 +20,45 @@ data:
     links: []
   bundledCode: "#line 1 \"binary-search-tree/rbst.hpp\"\n/**\n * @file rbst.hpp\n\
     \ * @author michirakara\n * @brief RBST ordered set\n * @date 2024-05-14\n */\n\
-    \n#line 1 \"algebra/concepts.hpp\"\n#include <concepts>\nnamespace libmcr {\n\
-    /**\n * @brief monoid\u304B\u3069\u3046\u304B\u3092\u5224\u5B9A\u3059\u308Bconcept\n\
-    \ * `value_type`, `value_type op(value_type x,value_type x)`,\n * `value_type\
-    \ e()`\u304C\u5B58\u5728\u3059\u308B\u304B\u5224\u5B9A\u3059\u308B\n *\n * @tparam\
-    \ Monoid\n */\ntemplate <class Monoid>\nconcept monoid = requires(Monoid a, Monoid::value_type\
-    \ x) {\n    { a.op(x, x) } -> std::same_as<typename Monoid::value_type>;\n   \
-    \ { a.e() } -> std::same_as<typename Monoid::value_type>;\n};\n} // namespace\
-    \ libmcr\n#line 1 \"internal/dummy.hpp\"\nnamespace libmcr {\n/**\n * @brief \u30C0\
-    \u30DF\u30FC\u69CB\u9020\u4F53\n *\n */\nstruct dummy {};\n} // namespace libmcr\n\
-    #line 10 \"binary-search-tree/rbst.hpp\"\n#include <algorithm>\n#include <array>\n\
-    #include <cassert>\n#include <iostream>\n#include <ranges>\n#include <utility>\n\
-    #include <vector>\n\nnamespace libmcr {\n\ntemplate <class S> consteval auto to_val()\
-    \ {\n    if constexpr (monoid<S>)\n        return typename S::value_type{};\n\
-    \    else\n        return S{};\n}\n/**\n * @brief RBST ordered set\n * S\u306E\
-    \u578B\u306B\u5FDC\u3058\u3066\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\
-    on/off\u3059\u308B\n *\n * @tparam S\n * algebra/concepts.hpp\u306B\u3042\u308B\
-    monoid\u3092\u6E80\u305F\u3059\u578B\u304C\u4E0E\u3048\u3089\u308C\u305F\u5834\
-    \u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\u3064\u3051\u308B\
-    \n * \u305D\u3046\u3067\u306A\u3044\u5834\u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\
-    \u6A5F\u80FD\u3092\u3064\u3051\u306A\u3044set\u304C\u751F\u6210\u3055\u308C\u308B\
-    \n * @tparam DEFAULT_POOL_SIZE \u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u30E1\u30E2\
-    \u30EA\u30D7\u30FC\u30EB\u306E\u9577\u3055\n * \u6307\u5B9A\u3055\u308C\u306A\u3044\
-    \u5834\u5408\u306F $10000000$ \u306B\u306A\u308B\n */\ntemplate <class S, size_t\
-    \ DEFAULT_POOL_SIZE = 10000000> class rbst {\n  protected:\n    using val_t =\
-    \ decltype(to_val<S>());\n\n    struct node_t {\n        val_t val;\n        [[no_unique_address]]\
-    \ std::conditional_t<monoid<S>, val_t, dummy>\n            product;\n        node_t\
-    \ *lch = nullptr, *rch = nullptr;\n        size_t siz = 1;\n        node_t() =\
-    \ default;\n        node_t(val_t value) {\n            val = value;\n        \
-    \    if constexpr (monoid<S>)\n                product = value;\n        }\n \
-    \   };\n    unsigned int xorshift128() {\n        static unsigned int x = 123456789,\
-    \ y = 362436069, z = 521288629,\n                            w = time(0);\n  \
-    \      unsigned int t = x ^ (x << 11);\n        x = y;\n        y = z;\n     \
-    \   z = w;\n        w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));\n        return w;\n\
-    \    }\n    std::vector<node_t> pool;\n    size_t pool_idx = 0;\n\n    node_t\
-    \ *top_node = nullptr;\n\n    node_t *make_ptr(val_t val) {\n        if (pool_idx\
-    \ < DEFAULT_POOL_SIZE) {\n            pool[pool_idx] = node_t(val);\n        \
-    \    return &pool[pool_idx++];\n        }\n        pool.push_back(node_t(val));\n\
+    \n#line 1 \"algebra/concepts.hpp\"\n/**\n * @file concepts.hpp\n * @author michirakara\n\
+    \ * @brief concepts\n * @date 2024-05-14\n */\n#include <concepts>\nnamespace\
+    \ libmcr {\n/**\n * @brief monoid\u304B\u3069\u3046\u304B\u3092\u5224\u5B9A\u3059\
+    \u308Bconcept\n * `value_type`, `value_type op(value_type x,value_type x)`,\n\
+    \ * `value_type e()`\u304C\u5B58\u5728\u3059\u308B\u304B\u5224\u5B9A\u3059\u308B\
+    \n *\n * @tparam Monoid\n */\ntemplate <class Monoid>\nconcept monoid = requires(Monoid\
+    \ a, Monoid::value_type x) {\n    { a.op(x, x) } -> std::same_as<typename Monoid::value_type>;\n\
+    \    { a.e() } -> std::same_as<typename Monoid::value_type>;\n};\n} // namespace\
+    \ libmcr\n#line 1 \"internal/dummy.hpp\"\n/**\n * @file dummy.hpp\n * @author\
+    \ michirakara\n * @brief \u30C0\u30DF\u30FC\u69CB\u9020\u4F53\n * @date 2024-05-14\n\
+    \ */\nnamespace libmcr {\n/**\n * @brief \u30C0\u30DF\u30FC\u69CB\u9020\u4F53\n\
+    \ *\n */\nstruct dummy {};\n} // namespace libmcr\n#line 10 \"binary-search-tree/rbst.hpp\"\
+    \n#include <algorithm>\n#include <array>\n#include <cassert>\n#include <iostream>\n\
+    #include <ranges>\n#include <utility>\n#include <vector>\n\nnamespace libmcr {\n\
+    \ntemplate <class S> consteval auto to_val() {\n    if constexpr (monoid<S>)\n\
+    \        return typename S::value_type{};\n    else\n        return S{};\n}\n\
+    /**\n * @brief RBST ordered set\n * S\u306E\u578B\u306B\u5FDC\u3058\u3066\u533A\
+    \u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092on/off\u3059\u308B\n *\n * @tparam S\n\
+    \ * algebra/concepts.hpp\u306B\u3042\u308Bmonoid\u3092\u6E80\u305F\u3059\u578B\
+    \u304C\u4E0E\u3048\u3089\u308C\u305F\u5834\u5408\u3001\u533A\u9593\u30AF\u30A8\
+    \u30EA\u6A5F\u80FD\u3092\u3064\u3051\u308B\n * \u305D\u3046\u3067\u306A\u3044\u5834\
+    \u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\u3064\u3051\u306A\
+    \u3044set\u304C\u751F\u6210\u3055\u308C\u308B\n * @tparam DEFAULT_POOL_SIZE \u30C7\
+    \u30D5\u30A9\u30EB\u30C8\u306E\u30E1\u30E2\u30EA\u30D7\u30FC\u30EB\u306E\u9577\
+    \u3055\n * \u6307\u5B9A\u3055\u308C\u306A\u3044\u5834\u5408\u306F $10000000$ \u306B\
+    \u306A\u308B\n */\ntemplate <class S, size_t DEFAULT_POOL_SIZE = 10000000> class\
+    \ rbst {\n  protected:\n    using val_t = decltype(to_val<S>());\n\n    struct\
+    \ node_t {\n        val_t val;\n        [[no_unique_address]] std::conditional_t<monoid<S>,\
+    \ val_t, dummy>\n            product;\n        node_t *lch = nullptr, *rch = nullptr;\n\
+    \        size_t siz = 1;\n        node_t() = default;\n        node_t(val_t value)\
+    \ {\n            val = value;\n            if constexpr (monoid<S>)\n        \
+    \        product = value;\n        }\n    };\n    unsigned int xorshift128() {\n\
+    \        static unsigned int x = 123456789, y = 362436069, z = 521288629,\n  \
+    \                          w = time(0);\n        unsigned int t = x ^ (x << 11);\n\
+    \        x = y;\n        y = z;\n        z = w;\n        w = (w ^ (w >> 19)) ^\
+    \ (t ^ (t >> 8));\n        return w;\n    }\n    std::vector<node_t> pool;\n \
+    \   size_t pool_idx = 0;\n\n    node_t *top_node = nullptr;\n\n    node_t *make_ptr(val_t\
+    \ val) {\n        if (pool_idx < DEFAULT_POOL_SIZE) {\n            pool[pool_idx]\
+    \ = node_t(val);\n            return &pool[pool_idx++];\n        }\n        pool.push_back(node_t(val));\n\
     \        return &pool[pool_idx++];\n    }\n\n    size_t get_product(node_t *node)\n\
     \        requires monoid<S>\n    {\n        return !node ? S().e() : node->product;\n\
     \    }\n\n    size_t get_size(node_t *node) { return !node ? 0 : node->siz; }\n\
@@ -268,7 +270,7 @@ data:
   isVerificationFile: false
   path: binary-search-tree/rbst.hpp
   requiredBy: []
-  timestamp: '2024-05-14 20:58:24-07:00'
+  timestamp: '2024-05-14 22:41:03-07:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - tests/binary-search-tree/rbst.test.cpp
