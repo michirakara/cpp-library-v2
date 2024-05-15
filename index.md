@@ -9,7 +9,7 @@ data:
   - name: binary-search-tree
     pages:
     - icon: ':heavy_check_mark:'
-      path: binary-search-tree/rbst.hpp
+      path: binary-search-tree/rbst-set.hpp
       title: RBST ordered set
   - name: internal
     pages:

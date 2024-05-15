@@ -3,7 +3,7 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: binary-search-tree/rbst.hpp
+    path: binary-search-tree/rbst-set.hpp
     title: RBST ordered set
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -37,7 +37,7 @@ data:
   isVerificationFile: false
   path: algebra/concepts.hpp
   requiredBy:
-  - binary-search-tree/rbst.hpp
+  - binary-search-tree/rbst-set.hpp
   timestamp: '2024-05-14 22:41:03-07:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

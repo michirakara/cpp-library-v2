@@ -5,7 +5,7 @@ data:
     path: algebra/concepts.hpp
     title: concepts
   - icon: ':heavy_check_mark:'
-    path: binary-search-tree/rbst.hpp
+    path: binary-search-tree/rbst-set.hpp
     title: RBST ordered set
   - icon: ':heavy_check_mark:'
     path: internal/dummy.hpp
@@ -21,8 +21,8 @@ data:
     links:
     - https://judge.yosupo.jp/problem/predecessor_problem
   bundledCode: "#line 1 \"tests/binary-search-tree/rbst.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\n#line 1 \"binary-search-tree/rbst.hpp\"\
-    \n/**\n * @file rbst.hpp\n * @author michirakara\n * @brief RBST ordered set\n\
+    \ \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\n#line 1 \"binary-search-tree/rbst-set.hpp\"\
+    \n/**\n * @file rbst-set.hpp\n * @author michirakara\n * @brief RBST ordered set\n\
     \ * @date 2024-05-14\n */\n\n#line 1 \"algebra/concepts.hpp\"\n/**\n * @file concepts.hpp\n\
     \ * @author michirakara\n * @brief concepts\n * @date 2024-05-14\n */\n#include\
     \ <concepts>\nnamespace libmcr {\n/**\n * @brief monoid\u304B\u3069\u3046\u304B\
@@ -34,7 +34,7 @@ data:
     };\n} // namespace libmcr\n#line 1 \"internal/dummy.hpp\"\n/**\n * @file dummy.hpp\n\
     \ * @author michirakara\n * @brief \u30C0\u30DF\u30FC\u69CB\u9020\u4F53\n * @date\
     \ 2024-05-14\n */\nnamespace libmcr {\n/**\n * @brief \u30C0\u30DF\u30FC\u69CB\
-    \u9020\u4F53\n *\n */\nstruct dummy {};\n} // namespace libmcr\n#line 10 \"binary-search-tree/rbst.hpp\"\
+    \u9020\u4F53\n *\n */\nstruct dummy {};\n} // namespace libmcr\n#line 10 \"binary-search-tree/rbst-set.hpp\"\
     \n#include <algorithm>\n#include <array>\n#include <cassert>\n#include <iostream>\n\
     #include <ranges>\n#include <utility>\n#include <vector>\n\nnamespace libmcr {\n\
     \ntemplate <class S> consteval auto to_val() {\n    if constexpr (monoid<S>)\n\
@@ -49,7 +49,7 @@ data:
     \u30D5\u30A9\u30EB\u30C8\u306E\u30E1\u30E2\u30EA\u30D7\u30FC\u30EB\u306E\u9577\
     \u3055\n * \u6307\u5B9A\u3055\u308C\u306A\u3044\u5834\u5408\u306F $10000000$ \u306B\
     \u306A\u308B\n */\ntemplate <class S, size_t DEFAULT_POOL_SIZE = 10000000> class\
-    \ rbst {\n  protected:\n    using val_t = decltype(to_val<S>());\n\n    struct\
+    \ rbst_set {\n  protected:\n    using val_t = decltype(to_val<S>());\n\n    struct\
     \ node_t {\n        val_t val;\n        [[no_unique_address]] std::conditional_t<monoid<S>,\
     \ val_t, dummy>\n            product;\n        node_t *lch = nullptr, *rch = nullptr;\n\
     \        size_t siz = 1;\n        node_t() = default;\n        node_t(val_t value)\
@@ -112,62 +112,46 @@ data:
     \                 std::max(l, get_size(node->lch) + 1) -\n                   \
     \                    (get_size(node->lch) + 1),\n                            \
     \       r - (get_size(node->lch) + 1)));\n        }\n        return ret;\n   \
-    \ }\n\n  public:\n    /**\n     * @brief Construct a new rbst object\n     *\n\
-    \     */\n    rbst() : pool(DEFAULT_POOL_SIZE) {}\n    /**\n     * @brief Construct\
-    \ a new rbst object\n     *\n     * @param init\n     * set\u3092init\u3067\u521D\
-    \u671F\u5316\u3059\u308B\n     */\n    rbst(std::vector<val_t> init) : pool(DEFAULT_POOL_SIZE)\
-    \ {\n        for (val_t i : init)\n            insert(i);\n    }\n    /**\n  \
-    \   * @brief `val`\u3092\u8FFD\u52A0\u3059\u308B\n     *\n     * @param val\n\
-    \     */\n    void insert(val_t val) { top_node = insert(top_node, val); }\n \
-    \   /**\n     * @brief `rbst[index]`\u306B\u3042\u308B\u8981\u7D20\u3092\u524A\
-    \u9664\u3059\u308B\n     *\n     * @param index 0-indexed\n     */\n    void erase_by_index(size_t\
-    \ index) {\n        assert(0 <= index && index < top_node->siz);\n        top_node\
-    \ = erase_by_index(top_node, index);\n    }\n    /**\n     * @brief `val`\u3092\
-    set\u304B\u3089\u524A\u9664\u3059\u308B\n     * \u5B58\u5728\u3057\u306A\u3044\
-    \u5834\u5408\u306F\u30A8\u30E9\u30FC\u306B\u306A\u308B\n     *\n     * @param\
-    \ val\n     */\n    void erase_by_val(val_t val) {\n        assert(includes(val));\n\
-    \        top_node = erase_by_val(top_node, val);\n    }\n    /**\n     * @brief\
-    \ \u5C0F\u3055\u3044\u65B9\u304B\u3089`index`\u756A\u76EE\u306E\u8981\u7D20\u3092\
-    \u8FD4\u3059\n     *\n     * @param index 0-indexed\n     * @return val_t\n  \
-    \   */\n    val_t operator[](size_t index) {\n        assert(0 <= index && index\
-    \ < top_node->siz);\n        return get_val(top_node, index);\n    }\n    /**\n\
-    \     * @brief set\u306E\u9577\u3055\u3092\u8FD4\u3059\n     *\n     * @return\
-    \ size_t\n     */\n    size_t size() { return top_node ? top_node->siz : 0; }\n\
-    \    /**\n     * @brief \u8981\u7D20\u304C`val`\u4EE5\u4E0A\u3067\u3042\u308B\u6700\
-    \u5C0F\u306Eindex\u3092\u8FD4\u3059\n     * \u5B58\u5728\u3057\u306A\u3044\u5834\
-    \u5408\u306Fsize()\u3092\u8FD4\u3059\n     *\n     * @param val\n     * @return\
-    \ size_t\n     */\n    size_t lower_bound(val_t val) { return lower_bound(top_node,\
-    \ val); }\n    /**\n     * @brief \u8981\u7D20\u304C`val`\u3088\u308A\u5927\u304D\
-    \u3044\u6700\u5C0F\u306Eindex\u3092\u8FD4\u3059\n     *\n     * @param val\n \
-    \    * @return size_t\n     */\n    size_t upper_bound(val_t val) { return upper_bound(top_node,\
-    \ val); }\n    /**\n     * @brief `val`\u304Cset\u306B\u5B58\u5728\u3059\u308B\
-    \u306A\u3089`true`\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070`false`\u3092\
-    \u8FD4\u3059\n     *\n     * @param val\n     * @return true\n     * @return false\n\
-    \     */\n    bool includes(val_t val) {\n        size_t tmp = lower_bound(val);\n\
-    \        return tmp < size() ? operator[](tmp) == val : false;\n    }\n    /**\n\
-    \     * @brief op[l,r)\u3092\u8FD4\u3059\n     * S\u306B\u30E2\u30CE\u30A4\u30C9\
-    \u304C\u4E0E\u3048\u3089\u308C\u305F\u5834\u5408\u306E\u307F\u5B58\u5728\u3059\
-    \u308B\u95A2\u6570\n     *\n     * @param l\n     * @param r\n     * @return val_t\n\
-    \     */\n    val_t prod(size_t l, size_t r) { return prod(top_node, l, r); }\n\
-    };\n\n} // namespace libmcr\n#line 4 \"tests/binary-search-tree/rbst.test.cpp\"\
-    \n\n#include <bits/stdc++.h>\nusing namespace std;\nint main() {\n    libmcr::rbst<long\
-    \ long> tree;\n\n    int n, q;\n    cin >> n >> q;\n\n    string s;\n    cin >>\
-    \ s;\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '1')\n          \
-    \  tree.insert(i);\n    }\n    while (q--) {\n        int c, k;\n        cin >>\
-    \ c >> k;\n        if (c == 0) {\n            if (!tree.includes(k))\n       \
-    \         tree.insert(k);\n        } else if (c == 1) {\n            if (tree.includes(k))\n\
-    \                tree.erase_by_val(k);\n        } else if (c == 2) {\n       \
-    \     if (tree.includes(k)) {\n                cout << 1 << endl;\n          \
-    \  } else {\n                cout << 0 << endl;\n            }\n        } else\
-    \ if (c == 3) {\n            int idx = tree.lower_bound(k);\n            if (idx\
-    \ < tree.size())\n                cout << tree[idx] << endl;\n            else\n\
-    \                cout << -1 << endl;\n        } else {\n            int idx =\
-    \ tree.upper_bound(k) - 1;\n            if (0 <= idx)\n                cout <<\
-    \ tree[idx] << endl;\n            else\n                cout << -1 << endl;\n\
-    \        }\n    }\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\
-    \n#include \"../../binary-search-tree/rbst.hpp\"\n\n#include <bits/stdc++.h>\n\
-    using namespace std;\nint main() {\n    libmcr::rbst<long long> tree;\n\n    int\
+    \ }\n\n  public:\n    /**\n     * @brief Construct a new rbst_set object\n   \
+    \  *\n     */\n    rbst_set() : pool(DEFAULT_POOL_SIZE) {}\n    /**\n     * @brief\
+    \ Construct a new rbst_set object\n     *\n     * @param init\n     * set\u3092\
+    init\u3067\u521D\u671F\u5316\u3059\u308B\n     */\n    rbst_set(std::vector<val_t>\
+    \ init) : pool(DEFAULT_POOL_SIZE) {\n        for (val_t i : init)\n          \
+    \  insert(i);\n    }\n    /**\n     * @brief `val`\u3092\u8FFD\u52A0\u3059\u308B\
+    \n     *\n     * @param val\n     */\n    void insert(val_t val) { top_node =\
+    \ insert(top_node, val); }\n    /**\n     * @brief `rbst[index]`\u306B\u3042\u308B\
+    \u8981\u7D20\u3092\u524A\u9664\u3059\u308B\n     *\n     * @param index 0-indexed\n\
+    \     */\n    void erase_by_index(size_t index) {\n        assert(0 <= index &&\
+    \ index < top_node->siz);\n        top_node = erase_by_index(top_node, index);\n\
+    \    }\n    /**\n     * @brief `val`\u3092set\u304B\u3089\u524A\u9664\u3059\u308B\
+    \n     * \u5B58\u5728\u3057\u306A\u3044\u5834\u5408\u306F\u30A8\u30E9\u30FC\u306B\
+    \u306A\u308B\n     *\n     * @param val\n     */\n    void erase_by_val(val_t\
+    \ val) {\n        assert(includes(val));\n        top_node = erase_by_val(top_node,\
+    \ val);\n    }\n    /**\n     * @brief \u5C0F\u3055\u3044\u65B9\u304B\u3089`index`\u756A\
+    \u76EE\u306E\u8981\u7D20\u3092\u8FD4\u3059\n     *\n     * @param index 0-indexed\n\
+    \     * @return val_t\n     */\n    val_t operator[](size_t index) {\n       \
+    \ assert(0 <= index && index < top_node->siz);\n        return get_val(top_node,\
+    \ index);\n    }\n    /**\n     * @brief set\u306E\u9577\u3055\u3092\u8FD4\u3059\
+    \n     *\n     * @return size_t\n     */\n    size_t size() { return top_node\
+    \ ? top_node->siz : 0; }\n    /**\n     * @brief \u8981\u7D20\u304C`val`\u4EE5\
+    \u4E0A\u3067\u3042\u308B\u6700\u5C0F\u306Eindex\u3092\u8FD4\u3059\n     * \u5B58\
+    \u5728\u3057\u306A\u3044\u5834\u5408\u306Fsize()\u3092\u8FD4\u3059\n     *\n \
+    \    * @param val\n     * @return size_t\n     */\n    size_t lower_bound(val_t\
+    \ val) { return lower_bound(top_node, val); }\n    /**\n     * @brief \u8981\u7D20\
+    \u304C`val`\u3088\u308A\u5927\u304D\u3044\u6700\u5C0F\u306Eindex\u3092\u8FD4\u3059\
+    \n     *\n     * @param val\n     * @return size_t\n     */\n    size_t upper_bound(val_t\
+    \ val) { return upper_bound(top_node, val); }\n    /**\n     * @brief `val`\u304C\
+    set\u306B\u5B58\u5728\u3059\u308B\u306A\u3089`true`\u3001\u305D\u3046\u3067\u306A\
+    \u3051\u308C\u3070`false`\u3092\u8FD4\u3059\n     *\n     * @param val\n     *\
+    \ @return true\n     * @return false\n     */\n    bool includes(val_t val) {\n\
+    \        size_t tmp = lower_bound(val);\n        return tmp < size() ? operator[](tmp)\
+    \ == val : false;\n    }\n    /**\n     * @brief op[l,r)\u3092\u8FD4\u3059\n \
+    \    * S\u306B\u30E2\u30CE\u30A4\u30C9\u304C\u4E0E\u3048\u3089\u308C\u305F\u5834\
+    \u5408\u306E\u307F\u5B58\u5728\u3059\u308B\u95A2\u6570\n     *\n     * @param\
+    \ l\n     * @param r\n     * @return val_t\n     */\n    val_t prod(size_t l,\
+    \ size_t r) { return prod(top_node, l, r); }\n};\n\n} // namespace libmcr\n#line\
+    \ 4 \"tests/binary-search-tree/rbst.test.cpp\"\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\nint main() {\n    libmcr::rbst_set<long long> tree;\n\n    int\
     \ n, q;\n    cin >> n >> q;\n\n    string s;\n    cin >> s;\n    for (int i =\
     \ 0; i < n; i++) {\n        if (s[i] == '1')\n            tree.insert(i);\n  \
     \  }\n    while (q--) {\n        int c, k;\n        cin >> c >> k;\n        if\
@@ -180,15 +164,31 @@ data:
     \           cout << tree[idx] << endl;\n            else\n                cout\
     \ << -1 << endl;\n        } else {\n            int idx = tree.upper_bound(k)\
     \ - 1;\n            if (0 <= idx)\n                cout << tree[idx] << endl;\n\
+    \            else\n                cout << -1 << endl;\n        }\n    }\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\
+    \n#include \"../../binary-search-tree/rbst-set.hpp\"\n\n#include <bits/stdc++.h>\n\
+    using namespace std;\nint main() {\n    libmcr::rbst_set<long long> tree;\n\n\
+    \    int n, q;\n    cin >> n >> q;\n\n    string s;\n    cin >> s;\n    for (int\
+    \ i = 0; i < n; i++) {\n        if (s[i] == '1')\n            tree.insert(i);\n\
+    \    }\n    while (q--) {\n        int c, k;\n        cin >> c >> k;\n       \
+    \ if (c == 0) {\n            if (!tree.includes(k))\n                tree.insert(k);\n\
+    \        } else if (c == 1) {\n            if (tree.includes(k))\n           \
+    \     tree.erase_by_val(k);\n        } else if (c == 2) {\n            if (tree.includes(k))\
+    \ {\n                cout << 1 << endl;\n            } else {\n              \
+    \  cout << 0 << endl;\n            }\n        } else if (c == 3) {\n         \
+    \   int idx = tree.lower_bound(k);\n            if (idx < tree.size())\n     \
+    \           cout << tree[idx] << endl;\n            else\n                cout\
+    \ << -1 << endl;\n        } else {\n            int idx = tree.upper_bound(k)\
+    \ - 1;\n            if (0 <= idx)\n                cout << tree[idx] << endl;\n\
     \            else\n                cout << -1 << endl;\n        }\n    }\n}"
   dependsOn:
-  - binary-search-tree/rbst.hpp
+  - binary-search-tree/rbst-set.hpp
   - algebra/concepts.hpp
   - internal/dummy.hpp
   isVerificationFile: true
   path: tests/binary-search-tree/rbst.test.cpp
   requiredBy: []
-  timestamp: '2024-05-14 22:41:03-07:00'
+  timestamp: '2024-05-15 10:18:44-07:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: tests/binary-search-tree/rbst.test.cpp
