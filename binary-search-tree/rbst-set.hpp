@@ -1,5 +1,5 @@
 /**
- * @file rbst.hpp
+ * @file rbst-set.hpp
  * @author michirakara
  * @brief RBST ordered set
  * @date 2024-05-14
@@ -33,7 +33,7 @@ template <class S> consteval auto to_val() {
  * @tparam DEFAULT_POOL_SIZE デフォルトのメモリプールの長さ
  * 指定されない場合は $10000000$ になる
  */
-template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst {
+template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst_set {
   protected:
     using val_t = decltype(to_val<S>());
 
@@ -189,17 +189,17 @@ template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst {
 
   public:
     /**
-     * @brief Construct a new rbst object
+     * @brief Construct a new rbst_set object
      *
      */
-    rbst() : pool(DEFAULT_POOL_SIZE) {}
+    rbst_set() : pool(DEFAULT_POOL_SIZE) {}
     /**
-     * @brief Construct a new rbst object
+     * @brief Construct a new rbst_set object
      *
      * @param init
      * setをinitで初期化する
      */
-    rbst(std::vector<val_t> init) : pool(DEFAULT_POOL_SIZE) {
+    rbst_set(std::vector<val_t> init) : pool(DEFAULT_POOL_SIZE) {
         for (val_t i : init)
             insert(i);
     }

@@ -1,11 +1,11 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/predecessor_problem"
 
-#include "../../binary-search-tree/rbst.hpp"
+#include "../../binary-search-tree/rbst-set.hpp"
 
 #include <bits/stdc++.h>
 using namespace std;
 int main() {
-    libmcr::rbst<long long> tree;
+    libmcr::rbst_set<long long> tree;
 
     int n, q;
     cin >> n >> q;
