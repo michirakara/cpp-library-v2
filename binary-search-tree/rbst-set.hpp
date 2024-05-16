@@ -4,9 +4,9 @@
  * @brief RBST ordered set
  * @date 2024-05-14
  */
-
 #include "../algebra/concepts.hpp"
 #include "../internal/dummy.hpp"
+#include "../random/xorshift.hpp"
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -50,16 +50,7 @@ template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst_set {
                 product = value;
         }
     };
-    unsigned int xorshift128() {
-        static unsigned int x = 123456789, y = 362436069, z = 521288629,
-                            w = time(0);
-        unsigned int t = x ^ (x << 11);
-        x = y;
-        y = z;
-        z = w;
-        w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));
-        return w;
-    }
+
     std::vector<node_t> pool;
     size_t pool_idx = 0;
 
@@ -94,7 +85,7 @@ template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst_set {
         if (!l || !r)
             return !l ? r : l;
 
-        unsigned int rand_num = xorshift128() % (l->siz + r->siz);
+        unsigned int rand_num = xorshift128_32() % (l->siz + r->siz);
         if (rand_num < l->siz) {
             l->rch = merge(l->rch, r);
             return update(l);
