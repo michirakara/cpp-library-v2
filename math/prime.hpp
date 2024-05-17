@@ -1,4 +1,4 @@
-#include "../math/modpow.hpp"
+#include "../math/montgomery-reduction.hpp"
 #include "../random/xorshift.hpp"
 #include <algorithm>
 #include <concepts>
@@ -8,15 +8,16 @@ namespace libmcr {
 namespace internal {
 
 bool fermat_test(unsigned long long n, const size_t REP_NUM) {
+    montgomery_reduction MR(n);
     for (size_t rep = 0; rep < REP_NUM; rep++) {
         unsigned long long a = xorshift128_64() % (n - 1) + 1;
-        if (modpow(a, n - 1, n) != 1)
+        if (MR.pow(a, n - 1) != 1)
             return false;
     }
     return true;
 }
 
-bool miller_rabin(unsigned long long n, const size_t REP_NUM) {
+bool miller_rabin(unsigned long long n) {
     if (n <= 1) {
         return false;
     }
@@ -26,21 +27,23 @@ bool miller_rabin(unsigned long long n, const size_t REP_NUM) {
         k += 1;
         m >>= 1;
     }
-    for (size_t rep = 0; rep < REP_NUM; rep++) {
-        unsigned long long a = xorshift128_64() % (n - 2) + 2;
-        unsigned long long b = modpow(a, m, n);
+    montgomery_reduction MR(n);
+    for (unsigned long long a :
+         {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {
+        if (a % n == 0)
+            continue;
+        unsigned long long b = MR.pow(a, m);
+
+        if (b == 1)
+            continue;
 
         bool flag = false;
-        if (b == 1) {
-            flag = true;
-        } else {
-            for (size_t rep2 = 0; rep2 < k; rep2++) {
-                if (b == n - 1) {
-                    flag = true;
-                    break;
-                }
-                b = __uint128_t(b) * __uint128_t(b) % n;
+        for (size_t rep2 = 0; rep2 < k; rep2++) {
+            if (b == n - 1) {
+                flag = true;
+                break;
             }
+            b = MR.mult(b, b);
         }
         if (!flag)
             return false;
@@ -50,21 +53,14 @@ bool miller_rabin(unsigned long long n, const size_t REP_NUM) {
 
 } // namespace internal
 bool is_prime(unsigned long long num) {
-    const unsigned long long SMALL_PRIMES[] = {2,  3,  5,  7,  11,
-                                               13, 17, 19, 23, 29};
-    if (num <= 29) {
-        for (unsigned long long i : SMALL_PRIMES) {
-            if (num == i)
-                return true;
-        }
+    if (num <= 1) {
         return false;
+    } else if (num <= 3) {
+        return true;
     }
     if (!(num & 1))
         return false;
-    const unsigned long long PRIME_PRODUCT = 3234846615;
-    if (std::gcd(PRIME_PRODUCT, num) != 1)
-        return false;
-    if (internal::fermat_test(num, 5) && internal::miller_rabin(num, 20)) {
+    if (internal::miller_rabin(num)) {
         return true;
     }
     return false;
