@@ -7,6 +7,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: internal/dummy.hpp
     title: "\u30C0\u30DF\u30FC\u69CB\u9020\u4F53"
+  - icon: ':heavy_check_mark:'
+    path: random/xorshift.hpp
+    title: random/xorshift.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -20,7 +23,7 @@ data:
     links: []
   bundledCode: "#line 1 \"binary-search-tree/rbst-set.hpp\"\n/**\n * @file rbst-set.hpp\n\
     \ * @author michirakara\n * @brief RBST ordered set\n * @date 2024-05-14\n */\n\
-    \n#line 1 \"algebra/concepts.hpp\"\n/**\n * @file concepts.hpp\n * @author michirakara\n\
+    #line 1 \"algebra/concepts.hpp\"\n/**\n * @file concepts.hpp\n * @author michirakara\n\
     \ * @brief concepts\n * @date 2024-05-14\n */\n#include <concepts>\nnamespace\
     \ libmcr {\n/**\n * @brief monoid\u304B\u3069\u3046\u304B\u3092\u5224\u5B9A\u3059\
     \u308Bconcept\n * `value_type`, `value_type op(value_type x,value_type x)`,\n\
@@ -32,32 +35,37 @@ data:
     \ michirakara\n * @brief \u30C0\u30DF\u30FC\u69CB\u9020\u4F53\n * @date 2024-05-14\n\
     \ */\nnamespace libmcr {\nnamespace internal {\n/**\n * @brief \u30C0\u30DF\u30FC\
     \u69CB\u9020\u4F53\n *\n */\nstruct dummy {};\n} // namespace internal\n} // namespace\
-    \ libmcr\n#line 10 \"binary-search-tree/rbst-set.hpp\"\n#include <algorithm>\n\
-    #include <array>\n#include <cassert>\n#include <iostream>\n#include <ranges>\n\
-    #include <utility>\n#include <vector>\n\nnamespace libmcr {\n\ntemplate <class\
-    \ S> consteval auto to_val() {\n    if constexpr (monoid<S>)\n        return typename\
-    \ S::value_type{};\n    else\n        return S{};\n}\n/**\n * @brief RBST ordered\
-    \ set\n * S\u306E\u578B\u306B\u5FDC\u3058\u3066\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\
-    \u80FD\u3092on/off\u3059\u308B\n *\n * @tparam S\n * algebra/concepts.hpp\u306B\
-    \u3042\u308Bmonoid\u3092\u6E80\u305F\u3059\u578B\u304C\u4E0E\u3048\u3089\u308C\
-    \u305F\u5834\u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\u3064\
-    \u3051\u308B\n * \u305D\u3046\u3067\u306A\u3044\u5834\u5408\u3001\u533A\u9593\u30AF\
-    \u30A8\u30EA\u6A5F\u80FD\u3092\u3064\u3051\u306A\u3044set\u304C\u751F\u6210\u3055\
-    \u308C\u308B\n * @tparam DEFAULT_POOL_SIZE \u30C7\u30D5\u30A9\u30EB\u30C8\u306E\
-    \u30E1\u30E2\u30EA\u30D7\u30FC\u30EB\u306E\u9577\u3055\n * \u6307\u5B9A\u3055\u308C\
-    \u306A\u3044\u5834\u5408\u306F $10000000$ \u306B\u306A\u308B\n */\ntemplate <class\
-    \ S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst_set {\n  protected:\n   \
-    \ using val_t = decltype(to_val<S>());\n\n    struct node_t {\n        val_t val;\n\
-    \        [[no_unique_address]] std::conditional_t<monoid<S>, val_t,\n        \
-    \                                         internal::dummy> product;\n        node_t\
+    \ libmcr\n#line 1 \"random/xorshift.hpp\"\n#include <ctime>\nnamespace libmcr\
+    \ {\nunsigned int xorshift128_32() {\n    static unsigned int x = 123456789, y\
+    \ = 362436069, z = 521288629,\n                        w = std::time(nullptr);\n\
+    \    unsigned int t = x ^ (x << 11);\n    x = y;\n    y = z;\n    z = w;\n   \
+    \ w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));\n    return w;\n}\n\nunsigned long long\
+    \ xorshift128_64() {\n    static unsigned long long x = 123456789, y = 362436069,\
+    \ z = 521288629,\n                              w = std::time(nullptr);\n    unsigned\
+    \ long long t = x ^ (x << 11);\n    x = y;\n    y = z;\n    z = w;\n    w = (w\
+    \ ^ (w >> 19)) ^ (t ^ (t >> 8));\n    return w;\n}\n} // namespace libmcr\n#line\
+    \ 10 \"binary-search-tree/rbst-set.hpp\"\n#include <algorithm>\n#include <array>\n\
+    #include <cassert>\n#include <iostream>\n#include <ranges>\n#include <utility>\n\
+    #include <vector>\n\nnamespace libmcr {\n\ntemplate <class S> consteval auto to_val()\
+    \ {\n    if constexpr (monoid<S>)\n        return typename S::value_type{};\n\
+    \    else\n        return S{};\n}\n/**\n * @brief RBST ordered set\n * S\u306E\
+    \u578B\u306B\u5FDC\u3058\u3066\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\
+    on/off\u3059\u308B\n *\n * @tparam S\n * algebra/concepts.hpp\u306B\u3042\u308B\
+    monoid\u3092\u6E80\u305F\u3059\u578B\u304C\u4E0E\u3048\u3089\u308C\u305F\u5834\
+    \u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\u3064\u3051\u308B\
+    \n * \u305D\u3046\u3067\u306A\u3044\u5834\u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\
+    \u6A5F\u80FD\u3092\u3064\u3051\u306A\u3044set\u304C\u751F\u6210\u3055\u308C\u308B\
+    \n * @tparam DEFAULT_POOL_SIZE \u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u30E1\u30E2\
+    \u30EA\u30D7\u30FC\u30EB\u306E\u9577\u3055\n * \u6307\u5B9A\u3055\u308C\u306A\u3044\
+    \u5834\u5408\u306F $10000000$ \u306B\u306A\u308B\n */\ntemplate <class S, size_t\
+    \ DEFAULT_POOL_SIZE = 10000000> class rbst_set {\n  protected:\n    using val_t\
+    \ = decltype(to_val<S>());\n\n    struct node_t {\n        val_t val;\n      \
+    \  [[no_unique_address]] std::conditional_t<monoid<S>, val_t,\n              \
+    \                                   internal::dummy> product;\n        node_t\
     \ *lch = nullptr, *rch = nullptr;\n        size_t siz = 1;\n        node_t() =\
     \ default;\n        node_t(val_t value) {\n            val = value;\n        \
     \    if constexpr (monoid<S>)\n                product = value;\n        }\n \
-    \   };\n    unsigned int xorshift128() {\n        static unsigned int x = 123456789,\
-    \ y = 362436069, z = 521288629,\n                            w = time(0);\n  \
-    \      unsigned int t = x ^ (x << 11);\n        x = y;\n        y = z;\n     \
-    \   z = w;\n        w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));\n        return w;\n\
-    \    }\n    std::vector<node_t> pool;\n    size_t pool_idx = 0;\n\n    node_t\
+    \   };\n\n    std::vector<node_t> pool;\n    size_t pool_idx = 0;\n\n    node_t\
     \ *top_node = nullptr;\n\n    node_t *make_ptr(val_t val) {\n        if (pool_idx\
     \ < DEFAULT_POOL_SIZE) {\n            pool[pool_idx] = node_t(val);\n        \
     \    return &pool[pool_idx++];\n        }\n        pool.push_back(node_t(val));\n\
@@ -69,7 +77,7 @@ data:
     \ = S().op(S().op(get_product(node->lch), node->val),\n                      \
     \             get_product(node->rch));\n        return node;\n    }\n\n    node_t\
     \ *merge(node_t *l, node_t *r) {\n        if (!l || !r)\n            return !l\
-    \ ? r : l;\n\n        unsigned int rand_num = xorshift128() % (l->siz + r->siz);\n\
+    \ ? r : l;\n\n        unsigned int rand_num = xorshift128_32() % (l->siz + r->siz);\n\
     \        if (rand_num < l->siz) {\n            l->rch = merge(l->rch, r);\n  \
     \          return update(l);\n        } else {\n            r->lch = merge(l,\
     \ r->lch);\n            return update(r);\n        }\n    }\n    std::pair<node_t\
@@ -150,33 +158,29 @@ data:
     \ l\n     * @param r\n     * @return val_t\n     */\n    val_t prod(size_t l,\
     \ size_t r) { return prod(top_node, l, r); }\n};\n\n} // namespace libmcr\n"
   code: "/**\n * @file rbst-set.hpp\n * @author michirakara\n * @brief RBST ordered\
-    \ set\n * @date 2024-05-14\n */\n\n#include \"../algebra/concepts.hpp\"\n#include\
-    \ \"../internal/dummy.hpp\"\n#include <algorithm>\n#include <array>\n#include\
-    \ <cassert>\n#include <iostream>\n#include <ranges>\n#include <utility>\n#include\
-    \ <vector>\n\nnamespace libmcr {\n\ntemplate <class S> consteval auto to_val()\
-    \ {\n    if constexpr (monoid<S>)\n        return typename S::value_type{};\n\
-    \    else\n        return S{};\n}\n/**\n * @brief RBST ordered set\n * S\u306E\
-    \u578B\u306B\u5FDC\u3058\u3066\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\
-    on/off\u3059\u308B\n *\n * @tparam S\n * algebra/concepts.hpp\u306B\u3042\u308B\
-    monoid\u3092\u6E80\u305F\u3059\u578B\u304C\u4E0E\u3048\u3089\u308C\u305F\u5834\
-    \u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\u3064\u3051\u308B\
-    \n * \u305D\u3046\u3067\u306A\u3044\u5834\u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\
-    \u6A5F\u80FD\u3092\u3064\u3051\u306A\u3044set\u304C\u751F\u6210\u3055\u308C\u308B\
-    \n * @tparam DEFAULT_POOL_SIZE \u30C7\u30D5\u30A9\u30EB\u30C8\u306E\u30E1\u30E2\
-    \u30EA\u30D7\u30FC\u30EB\u306E\u9577\u3055\n * \u6307\u5B9A\u3055\u308C\u306A\u3044\
-    \u5834\u5408\u306F $10000000$ \u306B\u306A\u308B\n */\ntemplate <class S, size_t\
-    \ DEFAULT_POOL_SIZE = 10000000> class rbst_set {\n  protected:\n    using val_t\
-    \ = decltype(to_val<S>());\n\n    struct node_t {\n        val_t val;\n      \
-    \  [[no_unique_address]] std::conditional_t<monoid<S>, val_t,\n              \
-    \                                   internal::dummy> product;\n        node_t\
+    \ set\n * @date 2024-05-14\n */\n#include \"../algebra/concepts.hpp\"\n#include\
+    \ \"../internal/dummy.hpp\"\n#include \"../random/xorshift.hpp\"\n#include <algorithm>\n\
+    #include <array>\n#include <cassert>\n#include <iostream>\n#include <ranges>\n\
+    #include <utility>\n#include <vector>\n\nnamespace libmcr {\n\ntemplate <class\
+    \ S> consteval auto to_val() {\n    if constexpr (monoid<S>)\n        return typename\
+    \ S::value_type{};\n    else\n        return S{};\n}\n/**\n * @brief RBST ordered\
+    \ set\n * S\u306E\u578B\u306B\u5FDC\u3058\u3066\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\
+    \u80FD\u3092on/off\u3059\u308B\n *\n * @tparam S\n * algebra/concepts.hpp\u306B\
+    \u3042\u308Bmonoid\u3092\u6E80\u305F\u3059\u578B\u304C\u4E0E\u3048\u3089\u308C\
+    \u305F\u5834\u5408\u3001\u533A\u9593\u30AF\u30A8\u30EA\u6A5F\u80FD\u3092\u3064\
+    \u3051\u308B\n * \u305D\u3046\u3067\u306A\u3044\u5834\u5408\u3001\u533A\u9593\u30AF\
+    \u30A8\u30EA\u6A5F\u80FD\u3092\u3064\u3051\u306A\u3044set\u304C\u751F\u6210\u3055\
+    \u308C\u308B\n * @tparam DEFAULT_POOL_SIZE \u30C7\u30D5\u30A9\u30EB\u30C8\u306E\
+    \u30E1\u30E2\u30EA\u30D7\u30FC\u30EB\u306E\u9577\u3055\n * \u6307\u5B9A\u3055\u308C\
+    \u306A\u3044\u5834\u5408\u306F $10000000$ \u306B\u306A\u308B\n */\ntemplate <class\
+    \ S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst_set {\n  protected:\n   \
+    \ using val_t = decltype(to_val<S>());\n\n    struct node_t {\n        val_t val;\n\
+    \        [[no_unique_address]] std::conditional_t<monoid<S>, val_t,\n        \
+    \                                         internal::dummy> product;\n        node_t\
     \ *lch = nullptr, *rch = nullptr;\n        size_t siz = 1;\n        node_t() =\
     \ default;\n        node_t(val_t value) {\n            val = value;\n        \
     \    if constexpr (monoid<S>)\n                product = value;\n        }\n \
-    \   };\n    unsigned int xorshift128() {\n        static unsigned int x = 123456789,\
-    \ y = 362436069, z = 521288629,\n                            w = time(0);\n  \
-    \      unsigned int t = x ^ (x << 11);\n        x = y;\n        y = z;\n     \
-    \   z = w;\n        w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));\n        return w;\n\
-    \    }\n    std::vector<node_t> pool;\n    size_t pool_idx = 0;\n\n    node_t\
+    \   };\n\n    std::vector<node_t> pool;\n    size_t pool_idx = 0;\n\n    node_t\
     \ *top_node = nullptr;\n\n    node_t *make_ptr(val_t val) {\n        if (pool_idx\
     \ < DEFAULT_POOL_SIZE) {\n            pool[pool_idx] = node_t(val);\n        \
     \    return &pool[pool_idx++];\n        }\n        pool.push_back(node_t(val));\n\
@@ -188,7 +192,7 @@ data:
     \ = S().op(S().op(get_product(node->lch), node->val),\n                      \
     \             get_product(node->rch));\n        return node;\n    }\n\n    node_t\
     \ *merge(node_t *l, node_t *r) {\n        if (!l || !r)\n            return !l\
-    \ ? r : l;\n\n        unsigned int rand_num = xorshift128() % (l->siz + r->siz);\n\
+    \ ? r : l;\n\n        unsigned int rand_num = xorshift128_32() % (l->siz + r->siz);\n\
     \        if (rand_num < l->siz) {\n            l->rch = merge(l->rch, r);\n  \
     \          return update(l);\n        } else {\n            r->lch = merge(l,\
     \ r->lch);\n            return update(r);\n        }\n    }\n    std::pair<node_t\
@@ -271,10 +275,11 @@ data:
   dependsOn:
   - algebra/concepts.hpp
   - internal/dummy.hpp
+  - random/xorshift.hpp
   isVerificationFile: false
   path: binary-search-tree/rbst-set.hpp
   requiredBy: []
-  timestamp: '2024-05-16 18:20:55-07:00'
+  timestamp: '2024-05-16 15:34:49-07:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - tests/binary-search-tree/rbst.test.cpp

@@ -16,11 +16,35 @@ data:
     - icon: ':heavy_check_mark:'
       path: internal/dummy.hpp
       title: "\u30C0\u30DF\u30FC\u69CB\u9020\u4F53"
+  - name: math
+    pages:
+    - icon: ':warning:'
+      path: math/extgcd.hpp
+      title: math/extgcd.hpp
+    - icon: ':warning:'
+      path: math/modpow.hpp
+      title: math/modpow.hpp
+    - icon: ':heavy_check_mark:'
+      path: math/montgomery-reduction.hpp
+      title: math/montgomery-reduction.hpp
+    - icon: ':heavy_check_mark:'
+      path: math/prime.hpp
+      title: math/prime.hpp
+  - name: random
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: random/xorshift.hpp
+      title: random/xorshift.hpp
   verificationCategories:
   - name: tests/binary-search-tree
     pages:
     - icon: ':heavy_check_mark:'
       path: tests/binary-search-tree/rbst.test.cpp
       title: tests/binary-search-tree/rbst.test.cpp
+  - name: tests/math
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: tests/math/is_prime.test.cpp
+      title: tests/math/is_prime.test.cpp
 layout: toppage
 ---
