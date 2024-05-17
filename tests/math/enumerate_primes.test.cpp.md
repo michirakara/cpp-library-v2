@@ -17,15 +17,16 @@ data:
   _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/enumerate_primes
+    IGNORE: ''
+    IGNORE_IF_GCC: ''
     links:
     - https://judge.yosupo.jp/problem/enumerate_primes
   bundledCode: "#line 1 \"tests/math/enumerate_primes.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/enumerate_primes\"\n\n#line 1 \"math/prime.hpp\"\
-    \n/**\n * @file prime.hpp\n * @author michirakara\n * @brief \u7D20\u6570\n *\
-    \ @date 2024-05-17\n */\n\n#line 1 \"math/montgomery-reduction.hpp\"\n/**\n *\
-    \ @file montgomery-reduction.hpp\n * @author michirakara\n * @brief \u30E2\u30F3\
-    \u30B4\u30E1\u30EA\u4E57\u7B97\n * @date 2024-05-17\n */\n\n#include <iostream>\n\
+    \ \"https://judge.yosupo.jp/problem/enumerate_primes\"\n#define IGNORE\n\n#line\
+    \ 1 \"math/prime.hpp\"\n/**\n * @file prime.hpp\n * @author michirakara\n * @brief\
+    \ \u7D20\u6570\n * @date 2024-05-17\n */\n\n#line 1 \"math/montgomery-reduction.hpp\"\
+    \n/**\n * @file montgomery-reduction.hpp\n * @author michirakara\n * @brief \u30E2\
+    \u30F3\u30B4\u30E1\u30EA\u4E57\u7B97\n * @date 2024-05-17\n */\n\n#include <iostream>\n\
     \nnamespace libmcr {\n/**\n * @brief \u30E2\u30F3\u30B4\u30E1\u30EA\u4E57\u7B97\
     \n *\n */\nclass montgomery_reduction {\n    __uint128_t N;\n    __uint128_t N_dash;\n\
     \    __uint128_t R2;\n\n    unsigned long long redc(__uint128_t t) {\n       \
@@ -88,7 +89,7 @@ data:
     \    std::vector<unsigned long long> to_ret{2, 3};\n    for (int i = 6; i - 1\
     \ <= n; i += 6) {\n        if (is_prime(i - 1))\n            to_ret.push_back(i\
     \ - 1);\n        if (i + 1 <= n && is_prime(i + 1))\n            to_ret.push_back(i\
-    \ + 1);\n    }\n    return to_ret;\n}\n} // namespace libmcr\n#line 4 \"tests/math/enumerate_primes.test.cpp\"\
+    \ + 1);\n    }\n    return to_ret;\n}\n} // namespace libmcr\n#line 5 \"tests/math/enumerate_primes.test.cpp\"\
     \n\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n\
     \    std::cin.tie(nullptr);\n    int n, a, b;\n    cin >> n >> a >> b;\n    vector<unsigned\
     \ long long> l = libmcr::enumerate_primes(n);\n\n    vector<unsigned long long>\
@@ -96,15 +97,15 @@ data:
     \    }\n\n    cout << l.size() << ' ' << to_out.size() << '\\n';\n    for (int\
     \ i = 0; i < to_out.size(); i++) {\n        cout << to_out[i] << \" \\n\"[to_out.size()\
     \ - 1 == i];\n    }\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_primes\"\n\n\
-    #include \"../../math/prime.hpp\"\n\n#include <bits/stdc++.h>\nusing namespace\
-    \ std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_primes\"\n#define\
+    \ IGNORE\n\n#include \"../../math/prime.hpp\"\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\
     \    int n, a, b;\n    cin >> n >> a >> b;\n    vector<unsigned long long> l =\
     \ libmcr::enumerate_primes(n);\n\n    vector<unsigned long long> to_out;\n   \
     \ for (int i = b; i < l.size(); i += a) {\n        to_out.push_back(l[i]);\n \
     \   }\n\n    cout << l.size() << ' ' << to_out.size() << '\\n';\n    for (int\
     \ i = 0; i < to_out.size(); i++) {\n        cout << to_out[i] << \" \\n\"[to_out.size()\
-    \ - 1 == i];\n    }\n}"
+    \ - 1 == i];\n    }\n}\n"
   dependsOn:
   - math/prime.hpp
   - math/montgomery-reduction.hpp
@@ -112,7 +113,7 @@ data:
   isVerificationFile: true
   path: tests/math/enumerate_primes.test.cpp
   requiredBy: []
-  timestamp: '2024-05-17 10:07:50-07:00'
+  timestamp: '2024-05-17 17:22:32+00:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: tests/math/enumerate_primes.test.cpp
