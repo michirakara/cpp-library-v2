@@ -35,11 +35,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: random/xorshift.hpp
       title: random/xorshift.hpp
-  - name: tests/math
-    pages:
-    - icon: ':warning:'
-      path: tests/math/enumerate_primes.no-test.cpp
-      title: tests/math/enumerate_primes.no-test.cpp
   verificationCategories:
   - name: tests/binary-search-tree
     pages:

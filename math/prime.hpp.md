@@ -7,10 +7,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: random/xorshift.hpp
     title: random/xorshift.hpp
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: tests/math/enumerate_primes.no-test.cpp
-    title: tests/math/enumerate_primes.no-test.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: tests/math/is_prime.test.cpp
@@ -126,8 +123,7 @@ data:
   - random/xorshift.hpp
   isVerificationFile: false
   path: math/prime.hpp
-  requiredBy:
-  - tests/math/enumerate_primes.no-test.cpp
+  requiredBy: []
   timestamp: '2024-05-17 10:07:50-07:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
