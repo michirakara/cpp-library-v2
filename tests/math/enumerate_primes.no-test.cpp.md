@@ -1,27 +1,24 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/montgomery-reduction.hpp
     title: "\u30E2\u30F3\u30B4\u30E1\u30EA\u4E57\u7B97"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime.hpp
     title: "\u7D20\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: random/xorshift.hpp
     title: random/xorshift.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    IGNORE: ''
-    IGNORE_IF_GCC: ''
     links:
     - https://judge.yosupo.jp/problem/enumerate_primes
-  bundledCode: "#line 1 \"tests/math/enumerate_primes.test.cpp\"\n#define PROBLEM\
+  bundledCode: "#line 1 \"tests/math/enumerate_primes.no-test.cpp\"\n#define PROBLEM\
     \ \"https://judge.yosupo.jp/problem/enumerate_primes\"\n#define IGNORE\n\n#line\
     \ 1 \"math/prime.hpp\"\n/**\n * @file prime.hpp\n * @author michirakara\n * @brief\
     \ \u7D20\u6570\n * @date 2024-05-17\n */\n\n#line 1 \"math/montgomery-reduction.hpp\"\
@@ -89,7 +86,7 @@ data:
     \    std::vector<unsigned long long> to_ret{2, 3};\n    for (int i = 6; i - 1\
     \ <= n; i += 6) {\n        if (is_prime(i - 1))\n            to_ret.push_back(i\
     \ - 1);\n        if (i + 1 <= n && is_prime(i + 1))\n            to_ret.push_back(i\
-    \ + 1);\n    }\n    return to_ret;\n}\n} // namespace libmcr\n#line 5 \"tests/math/enumerate_primes.test.cpp\"\
+    \ + 1);\n    }\n    return to_ret;\n}\n} // namespace libmcr\n#line 5 \"tests/math/enumerate_primes.no-test.cpp\"\
     \n\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n\
     \    std::cin.tie(nullptr);\n    int n, a, b;\n    cin >> n >> a >> b;\n    vector<unsigned\
     \ long long> l = libmcr::enumerate_primes(n);\n\n    vector<unsigned long long>\
@@ -110,16 +107,16 @@ data:
   - math/prime.hpp
   - math/montgomery-reduction.hpp
   - random/xorshift.hpp
-  isVerificationFile: true
-  path: tests/math/enumerate_primes.test.cpp
+  isVerificationFile: false
+  path: tests/math/enumerate_primes.no-test.cpp
   requiredBy: []
-  timestamp: '2024-05-17 17:22:32+00:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2024-05-17 10:27:02-07:00'
+  verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
-documentation_of: tests/math/enumerate_primes.test.cpp
+documentation_of: tests/math/enumerate_primes.no-test.cpp
 layout: document
 redirect_from:
-- /verify/tests/math/enumerate_primes.test.cpp
-- /verify/tests/math/enumerate_primes.test.cpp.html
-title: tests/math/enumerate_primes.test.cpp
+- /library/tests/math/enumerate_primes.no-test.cpp
+- /library/tests/math/enumerate_primes.no-test.cpp.html
+title: tests/math/enumerate_primes.no-test.cpp
 ---

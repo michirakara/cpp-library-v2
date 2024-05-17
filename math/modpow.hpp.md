@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/montgomery-reduction.hpp
     title: "\u30E2\u30F3\u30B4\u30E1\u30EA\u4E57\u7B97"
   _extendedRequiredBy: []

@@ -5,19 +5,19 @@ data:
   - icon: ':warning:'
     path: math/modpow.hpp
     title: modpow
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime.hpp
     title: "\u7D20\u6570"
+  - icon: ':warning:'
+    path: tests/math/enumerate_primes.no-test.cpp
+    title: tests/math/enumerate_primes.no-test.cpp
   _extendedVerifiedWith:
-  - icon: ':x:'
-    path: tests/math/enumerate_primes.test.cpp
-    title: tests/math/enumerate_primes.test.cpp
   - icon: ':heavy_check_mark:'
     path: tests/math/is_prime.test.cpp
     title: tests/math/is_prime.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u30E2\u30F3\u30B4\u30E1\u30EA\u4E57\u7B97"
     links: []
@@ -79,10 +79,10 @@ data:
   requiredBy:
   - math/modpow.hpp
   - math/prime.hpp
+  - tests/math/enumerate_primes.no-test.cpp
   timestamp: '2024-05-17 10:07:50-07:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - tests/math/enumerate_primes.test.cpp
   - tests/math/is_prime.test.cpp
 documentation_of: math/montgomery-reduction.hpp
 layout: document

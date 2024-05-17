@@ -24,17 +24,22 @@ data:
     - icon: ':warning:'
       path: math/modpow.hpp
       title: modpow
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/montgomery-reduction.hpp
       title: "\u30E2\u30F3\u30B4\u30E1\u30EA\u4E57\u7B97"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: math/prime.hpp
       title: "\u7D20\u6570"
   - name: random
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: random/xorshift.hpp
       title: random/xorshift.hpp
+  - name: tests/math
+    pages:
+    - icon: ':warning:'
+      path: tests/math/enumerate_primes.no-test.cpp
+      title: tests/math/enumerate_primes.no-test.cpp
   verificationCategories:
   - name: tests/binary-search-tree
     pages:
@@ -43,9 +48,6 @@ data:
       title: tests/binary-search-tree/rbst.test.cpp
   - name: tests/math
     pages:
-    - icon: ':x:'
-      path: tests/math/enumerate_primes.test.cpp
-      title: tests/math/enumerate_primes.test.cpp
     - icon: ':heavy_check_mark:'
       path: tests/math/is_prime.test.cpp
       title: tests/math/is_prime.test.cpp
