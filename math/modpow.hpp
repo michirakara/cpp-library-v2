@@ -1,6 +1,21 @@
+/**
+ * @file modpow.hpp
+ * @author michirakara
+ * @brief modpow
+ * @date 2024-05-17
+ */
 #include "../math/montgomery-reduction.hpp"
 
 namespace libmcr {
+/**
+ * @brief x ^ n % mod を求める
+ *
+ * @tparam T
+ * @param x
+ * @param n
+ * @param mod
+ * @return T
+ */
 template <typename T> T modpow(T x, T n, T mod) {
     if (mod & 1) {
         montgomery_reduction mr(mod);

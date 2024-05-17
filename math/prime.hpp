@@ -1,3 +1,10 @@
+/**
+ * @file prime.hpp
+ * @author michirakara
+ * @brief 素数
+ * @date 2024-05-17
+ */
+
 #include "../math/montgomery-reduction.hpp"
 #include "../random/xorshift.hpp"
 #include <algorithm>
@@ -53,6 +60,13 @@ bool miller_rabin(unsigned long long n) {
 }
 
 } // namespace internal
+/**
+ * @brief numが素数であるか判定する 確率的アルゴリズム**ではない**
+ *
+ * @param num
+ * @return true 素数の場合
+ * @return false 素数でない場合
+ */
 bool is_prime(unsigned long long num) {
     if (num <= 1) {
         return false;
