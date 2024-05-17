@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <concepts>
 #include <numeric>
+#include <vector>
 
 namespace libmcr {
 namespace internal {
@@ -64,5 +65,25 @@ bool is_prime(unsigned long long num) {
         return true;
     }
     return false;
+}
+/**
+ * @brief n**以下**の素数のvectorを返す
+ *
+ * @param n
+ * @return std::vector<unsigned long long>
+ */
+std::vector<unsigned long long> enumerate_primes(unsigned long long n) {
+    if (n <= 1)
+        return {};
+    if (n == 2)
+        return {2};
+    std::vector<unsigned long long> to_ret{2, 3};
+    for (int i = 6; i - 1 <= n; i += 6) {
+        if (is_prime(i - 1))
+            to_ret.push_back(i - 1);
+        if (i + 1 <= n && is_prime(i + 1))
+            to_ret.push_back(i + 1);
+    }
+    return to_ret;
 }
 } // namespace libmcr
