@@ -1,4 +1,4 @@
-#define PROBLEM "https://yukicoder.me/problems/no/3030"
+#define PROBLEM "https://judge.yosupo.jp/problem/primality_test"
 
 #include "../../math/prime.hpp"
 
@@ -10,6 +10,6 @@ int main() {
     for (int i = 0; i < n; i++) {
         unsigned long long x;
         cin >> x;
-        cout << x << ' ' << int(libmcr::is_prime(x)) << endl;
+        cout << (libmcr::is_prime(x) ? "Yes" : "No") << endl;
     }
 }
