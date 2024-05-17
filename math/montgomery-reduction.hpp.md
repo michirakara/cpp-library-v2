@@ -5,16 +5,19 @@ data:
   - icon: ':warning:'
     path: math/modpow.hpp
     title: math/modpow.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime.hpp
-    title: math/prime.hpp
+    title: "n**\u4EE5\u4E0B**\u306E\u7D20\u6570\u306Evector\u3092\u8FD4\u3059"
   _extendedVerifiedWith:
+  - icon: ':x:'
+    path: tests/math/enumerate_primes.test.cpp
+    title: tests/math/enumerate_primes.test.cpp
   - icon: ':heavy_check_mark:'
     path: tests/math/is_prime.test.cpp
     title: tests/math/is_prime.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"math/montgomery-reduction.hpp\"\n#include <iostream>\n\n\
@@ -58,8 +61,9 @@ data:
   - math/modpow.hpp
   - math/prime.hpp
   timestamp: '2024-05-16 21:55:44-07:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
+  - tests/math/enumerate_primes.test.cpp
   - tests/math/is_prime.test.cpp
 documentation_of: math/montgomery-reduction.hpp
 layout: document

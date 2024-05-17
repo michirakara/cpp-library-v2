@@ -24,15 +24,15 @@ data:
     - icon: ':warning:'
       path: math/modpow.hpp
       title: math/modpow.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/montgomery-reduction.hpp
       title: math/montgomery-reduction.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/prime.hpp
-      title: math/prime.hpp
+      title: "n**\u4EE5\u4E0B**\u306E\u7D20\u6570\u306Evector\u3092\u8FD4\u3059"
   - name: random
     pages:
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: random/xorshift.hpp
       title: random/xorshift.hpp
   verificationCategories:
@@ -43,6 +43,9 @@ data:
       title: tests/binary-search-tree/rbst.test.cpp
   - name: tests/math
     pages:
+    - icon: ':x:'
+      path: tests/math/enumerate_primes.test.cpp
+      title: tests/math/enumerate_primes.test.cpp
     - icon: ':heavy_check_mark:'
       path: tests/math/is_prime.test.cpp
       title: tests/math/is_prime.test.cpp

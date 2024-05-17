@@ -7,7 +7,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: internal/dummy.hpp
     title: "\u30C0\u30DF\u30FC\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: random/xorshift.hpp
     title: random/xorshift.hpp
   _extendedRequiredBy: []

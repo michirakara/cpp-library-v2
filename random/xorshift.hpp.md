@@ -5,19 +5,22 @@ data:
   - icon: ':heavy_check_mark:'
     path: binary-search-tree/rbst-set.hpp
     title: RBST ordered set
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime.hpp
-    title: math/prime.hpp
+    title: "n**\u4EE5\u4E0B**\u306E\u7D20\u6570\u306Evector\u3092\u8FD4\u3059"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: tests/binary-search-tree/rbst.test.cpp
     title: tests/binary-search-tree/rbst.test.cpp
+  - icon: ':x:'
+    path: tests/math/enumerate_primes.test.cpp
+    title: tests/math/enumerate_primes.test.cpp
   - icon: ':heavy_check_mark:'
     path: tests/math/is_prime.test.cpp
     title: tests/math/is_prime.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 1 \"random/xorshift.hpp\"\n#include <ctime>\nnamespace libmcr\
@@ -45,9 +48,10 @@ data:
   - binary-search-tree/rbst-set.hpp
   - math/prime.hpp
   timestamp: '2024-05-16 15:34:49-07:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - tests/binary-search-tree/rbst.test.cpp
+  - tests/math/enumerate_primes.test.cpp
   - tests/math/is_prime.test.cpp
 documentation_of: random/xorshift.hpp
 layout: document
