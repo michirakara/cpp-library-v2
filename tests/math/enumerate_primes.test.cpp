@@ -1,4 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/enumerate_primes"
+#define IGNORE
 
 #include "../../math/prime.hpp"
 
