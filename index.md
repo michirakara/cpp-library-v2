@@ -20,16 +20,17 @@ data:
     pages:
     - icon: ':warning:'
       path: math/extgcd.hpp
-      title: math/extgcd.hpp
+      title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u306E\u4E92\u9664\u6CD5\
+        \u3067ax+by=GCD(a,b)\u3068\u306A\u308Bx,y\u3092\u6C42\u3081\u308B"
     - icon: ':warning:'
       path: math/modpow.hpp
-      title: math/modpow.hpp
+      title: modpow
     - icon: ':question:'
       path: math/montgomery-reduction.hpp
-      title: math/montgomery-reduction.hpp
+      title: "\u30E2\u30F3\u30B4\u30E1\u30EA\u4E57\u7B97"
     - icon: ':question:'
       path: math/prime.hpp
-      title: "n**\u4EE5\u4E0B**\u306E\u7D20\u6570\u306Evector\u3092\u8FD4\u3059"
+      title: "\u7D20\u6570"
   - name: random
     pages:
     - icon: ':question:'

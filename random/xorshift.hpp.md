@@ -7,7 +7,7 @@ data:
     title: RBST ordered set
   - icon: ':question:'
     path: math/prime.hpp
-    title: "n**\u4EE5\u4E0B**\u306E\u7D20\u6570\u306Evector\u3092\u8FD4\u3059"
+    title: "\u7D20\u6570"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: tests/binary-search-tree/rbst.test.cpp
