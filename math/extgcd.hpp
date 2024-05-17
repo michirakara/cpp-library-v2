@@ -1,3 +1,10 @@
+/**
+ * @file extgcd.hpp
+ * @author michirakara
+ * @brief 拡張ユークリッドの互除法
+ * @date 2024-05-17
+ */
+
 #include <utility>
 
 namespace libmcr {
