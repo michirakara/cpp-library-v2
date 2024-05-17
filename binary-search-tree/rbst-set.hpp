@@ -39,8 +39,8 @@ template <class S, size_t DEFAULT_POOL_SIZE = 10000000> class rbst_set {
 
     struct node_t {
         val_t val;
-        [[no_unique_address]] std::conditional_t<monoid<S>, val_t, dummy>
-            product;
+        [[no_unique_address]] std::conditional_t<monoid<S>, val_t,
+                                                 internal::dummy> product;
         node_t *lch = nullptr, *rch = nullptr;
         size_t siz = 1;
         node_t() = default;
